@@ -127,9 +127,12 @@ export default function RekapPage() {
       ...studentSummary.map(student => 
         [student.nama, student.kelas, student.nis, student.hadir, student.terlambat, student.sakit, student.alpha, student.izin, student.total].join(',')
       )
-    ].join('\\n');
+    ].join('\n');
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    // Replace all \n with real newlines for correct CSV export
+    const csvWithRealNewlines = csvContent.replace(/\\n/g, '\n');
+
+    const blob = new Blob([csvWithRealNewlines], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = `rekap-absensi-${selectedMonth}.csv`;
