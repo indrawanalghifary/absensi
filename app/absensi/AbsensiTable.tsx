@@ -42,6 +42,7 @@ export default function AbsensiTable({ selectedDate, refresh }: AbsensiTableProp
       case 'terlambat': return 'bg-yellow-100 text-yellow-800';
       case 'sakit': return 'bg-blue-100 text-blue-800';
       case 'alpha': return 'bg-red-100 text-red-800';
+      case 'izin': return 'bg-purple-100 text-purple-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -52,6 +53,7 @@ export default function AbsensiTable({ selectedDate, refresh }: AbsensiTableProp
       case 'terlambat': return 'Terlambat';
       case 'sakit': return 'Sakit';
       case 'alpha': return 'Alpha';
+      case 'izin': return 'Izin';
       default: return status;
     }
   };
@@ -76,8 +78,9 @@ export default function AbsensiTable({ selectedDate, refresh }: AbsensiTableProp
     const terlambat = absensiData.filter(item => item.status === 'terlambat').length;
     const sakit = absensiData.filter(item => item.status === 'sakit').length;
     const alpha = absensiData.filter(item => item.status === 'alpha').length;
+    const izin = absensiData.filter(item => item.status === 'izin').length;
 
-    return { hadir, terlambat, sakit, alpha, total: absensiData.length };
+    return { hadir, terlambat, sakit, alpha, izin, total: absensiData.length };
   };
 
   const stats = getStatistics();
@@ -148,6 +151,18 @@ export default function AbsensiTable({ selectedDate, refresh }: AbsensiTableProp
               </div>
             </div>
           </div>
+          <div className="bg-purple-50 p-3 rounded-lg">
+            <div className="flex flex-col lg:flex-row lg:items-center space-y-2 lg:space-y-0 lg:space-x-2">
+              <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                <i className="ri-user-star-line text-white text-sm"></i>
+              </div>
+              <div>
+                <p className="text-xs lg:text-sm text-purple-600">Izin</p>
+                <p className="font-bold text-purple-900">{stats.izin}</p>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <div className="flex flex-col space-y-4">

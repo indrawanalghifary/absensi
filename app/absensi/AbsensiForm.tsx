@@ -104,7 +104,8 @@ export default function AbsensiForm({ selectedDate, onClose, onSuccess }: Absens
                 { value: 'hadir', label: 'Hadir', color: 'text-green-700 bg-green-50 border-green-200' },
                 { value: 'terlambat', label: 'Terlambat', color: 'text-yellow-700 bg-yellow-50 border-yellow-200' },
                 { value: 'sakit', label: 'Sakit', color: 'text-blue-700 bg-blue-50 border-blue-200' },
-                { value: 'alpha', label: 'Alpha', color: 'text-red-700 bg-red-50 border-red-200' }
+                { value: 'alpha', label: 'Alpha', color: 'text-red-700 bg-red-50 border-red-200' },
+                { value: 'izin', label: 'Izin', color: 'text-purple-700 bg-purple-50 border-purple-200' }
               ].map(status => (
                 <button
                   key={status.value}

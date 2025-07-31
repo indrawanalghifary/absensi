@@ -436,7 +436,8 @@ export const ABSENSI_STATUS = {
   HADIR: 'hadir',
   TERLAMBAT: 'terlambat',
   SAKIT: 'sakit',
-  ALPHA: 'alpha'
+  ALPHA: 'alpha',
+  IZIN: 'izin',
 } as const;
 
 // Label status absensi
@@ -444,7 +445,8 @@ export const STATUS_LABELS = {
   [ABSENSI_STATUS.HADIR]: 'Hadir',
   [ABSENSI_STATUS.TERLAMBAT]: 'Terlambat',
   [ABSENSI_STATUS.SAKIT]: 'Sakit',
-  [ABSENSI_STATUS.ALPHA]: 'Alpha'
+  [ABSENSI_STATUS.ALPHA]: 'Alpha',
+  [ABSENSI_STATUS.IZIN]: 'Izin'
 };
 
 // Warna status absensi

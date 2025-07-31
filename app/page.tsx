@@ -13,6 +13,7 @@ export default function Home() {
     hadirHariIni: 0,
     terlambat: 0,
     tidakHadir: 0,
+    izin: 0,
     todayAbsensi: 0
   });
 
@@ -32,12 +33,14 @@ export default function Home() {
     const terlambat = todayAbsensi.filter((item: any) => item.status === 'terlambat').length;
     const sakit = todayAbsensi.filter((item: any) => item.status === 'sakit').length;
     const alpha = todayAbsensi.filter((item: any) => item.status === 'alpha').length;
+    const izin = todayAbsensi.filter((item: any) => item.status === 'izin').length;
     const tidakHadir = sakit + alpha;
     setStats({
       totalSiswa,
       hadirHariIni,
       terlambat,
       tidakHadir,
+      izin,
       todayAbsensi: todayAbsensi.length,
     });
   };
@@ -81,6 +84,13 @@ export default function Home() {
             icon="ri-user-unfollow-line" 
             color="bg-red-500"
             change={`${stats.totalSiswa > 0 ? ((stats.tidakHadir / stats.totalSiswa) * 100).toFixed(1) : '0.0'}% dari total`}
+          />
+          <StatCard 
+            title="Izin" 
+            value={stats.izin.toString()} 
+            icon="ri-user-star-line" 
+            color="bg-purple-500"
+            change={`${stats.totalSiswa > 0 ? ((stats.izin / stats.totalSiswa) * 100).toFixed(1) : '0.0'}% dari total`}
           />
         </div>
 

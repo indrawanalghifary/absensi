@@ -53,6 +53,7 @@ export default function RekapPage() {
     const terlambat = absensiData.filter(item => item.status === 'terlambat').length;
     const sakit = absensiData.filter(item => item.status === 'sakit').length;
     const alpha = absensiData.filter(item => item.status === 'alpha').length;
+    const izin = absensiData.filter(item => item.status === 'izin').length;
 
     return {
       totalDays,
@@ -61,6 +62,7 @@ export default function RekapPage() {
       terlambat,
       sakit,
       alpha,
+      izin,
       total: absensiData.length
     };
   };
@@ -76,6 +78,7 @@ export default function RekapPage() {
         terlambat: 0,
         sakit: 0,
         alpha: 0,
+        izin: 0,
         total: 0
       });
     });
@@ -102,6 +105,7 @@ export default function RekapPage() {
           terlambat: 0,
           sakit: 0,
           alpha: 0,
+          izin: 0,
           total: 0
         });
       }
@@ -119,9 +123,9 @@ export default function RekapPage() {
   const exportToCSV = () => {
     const studentSummary = getStudentSummary();
     const csvContent = [
-      ['Nama', 'Kelas', 'NIS', 'Hadir', 'Terlambat', 'Sakit', 'Alpha', 'Total'].join(','),
+      ['Nama', 'Kelas', 'NIS', 'Hadir', 'Terlambat', 'Sakit', 'Alpha', 'Izin', 'Total'].join(','),
       ...studentSummary.map(student => 
-        [student.nama, student.kelas, student.nis, student.hadir, student.terlambat, student.sakit, student.alpha, student.total].join(',')
+        [student.nama, student.kelas, student.nis, student.hadir, student.terlambat, student.sakit, student.alpha, student.izin, student.total].join(',')
       )
     ].join('\\n');
 
@@ -180,9 +184,9 @@ export default function RekapPage() {
                 <div className="bg-blue-50 p-3 rounded-lg w-full">
                   <p className="text-xs lg:text-sm text-blue-600 mb-1">Periode Terpilih</p>
                   <p className="text-sm lg:text-base font-semibold text-blue-900">
-                    {new Date(selectedMonth + '-01').toLocaleDateString('id-ID', { 
-                      month: 'long', 
-                      year: 'numeric' 
+                    {new Date(selectedMonth + '-01').toLocaleDateString('id-ID', {
+                      month: 'long',
+                      year: 'numeric'
                     })}
                   </p>
                 </div>
@@ -246,6 +250,17 @@ export default function RekapPage() {
                 </div>
               </div>
             </div>
+            <div className="bg-white p-3 lg:p-6 rounded-xl shadow-sm border">
+              <div className="flex flex-col lg:flex-row lg:items-center space-y-2 lg:space-y-0 lg:space-x-3">
+                <div className="w-8 h-8 lg:w-12 lg:h-12 bg-purple-500 rounded-lg flex items-center justify-center">
+                  <i className="ri-user-star-line text-white text-sm lg:text-xl"></i>
+                </div>
+                <div>
+                  <p className="text-xs lg:text-sm text-gray-600">Izin</p>
+                  <p className="text-lg lg:text-2xl font-bold text-gray-900">{stats.izin}</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6">
@@ -291,6 +306,9 @@ export default function RekapPage() {
                           </span>
                           <span className="px-2 py-1 bg-red-100 text-red-800 rounded whitespace-nowrap">
                             A: {student.alpha}
+                          </span>
+                          <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded whitespace-nowrap">
+                            I: {student.izin}
                           </span>
                         </div>
                       </div>
@@ -348,6 +366,9 @@ export default function RekapPage() {
                           </span>
                           <span className="px-2 py-1 bg-red-100 text-red-800 rounded whitespace-nowrap">
                             A: {day.alpha}
+                          </span>
+                          <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded whitespace-nowrap">
+                            I: {day.izin}
                           </span>
                         </div>
                       </div>

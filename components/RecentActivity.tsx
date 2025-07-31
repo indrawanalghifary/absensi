@@ -48,6 +48,7 @@ export default function RecentActivity() {
       case 'terlambat': return 'terlambat';
       case 'sakit': return 'sakit';
       case 'alpha': return 'alpha';
+      case 'izin': return 'izin';
       default: return status;
     }
   };
@@ -58,6 +59,7 @@ export default function RecentActivity() {
       case 'terlambat': return 'ri-time-line';
       case 'sakit': return 'ri-heart-pulse-line';
       case 'alpha': return 'ri-user-unfollow-line';
+      case 'izin': return 'ri-user-star-line';
       default: return 'ri-user-check-line';
     }
   };
@@ -68,6 +70,7 @@ export default function RecentActivity() {
       case 'terlambat': return 'text-yellow-600 bg-yellow-50';
       case 'sakit': return 'text-blue-600 bg-blue-50';
       case 'alpha': return 'text-red-600 bg-red-50';
+      case 'izin': return 'text-purple-600 bg-purple-50';
       default: return 'text-gray-600 bg-gray-50';
     }
   };

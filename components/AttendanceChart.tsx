@@ -32,10 +32,11 @@ export default function AttendanceChart() {
         const terlambat = dayData.filter((item: any) => item.status === 'terlambat').length;
         const sakit = dayData.filter((item: any) => item.status === 'sakit').length;
         const alpha = dayData.filter((item: any) => item.status === 'alpha').length;
+        const izin = dayData.filter((item: any) => item.status === 'izin').length;
         weekData.push({
           name: dayNames[date.getDay()],
           hadir: hadir + terlambat, // Terlambat dianggap hadir
-          tidak: sakit + alpha
+          tidak: sakit + alpha + izin
         });
       }
       setChartData(weekData);

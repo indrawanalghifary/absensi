@@ -7,7 +7,7 @@ interface StudentStatusData {
   id: number;
   name: string;
   class: string;
-  status: 'Hadir' | 'Terlambat' | 'Sakit' | 'Alpha';
+  status: 'Hadir' | 'Terlambat' | 'Sakit' | 'Alpha' | 'Izin';
   time: string;
   avatar: string;
 }
@@ -39,12 +39,13 @@ export default function StudentStatusList() {
     }
   };
 
-  const getStatusDisplayName = (status: string): 'Hadir' | 'Terlambat' | 'Sakit' | 'Alpha' => {
+  const getStatusDisplayName = (status: string): 'Hadir' | 'Terlambat' | 'Sakit' | 'Alpha' | 'Izin' => {
     switch (status) {
       case 'hadir': return 'Hadir';
       case 'terlambat': return 'Terlambat';
       case 'sakit': return 'Sakit';
       case 'alpha': return 'Alpha';
+      case 'izin': return 'Izin';
       default: return 'Hadir';
     }
   };
@@ -55,6 +56,7 @@ export default function StudentStatusList() {
       case 'Terlambat': return 'bg-yellow-100 text-yellow-800';
       case 'Sakit': return 'bg-blue-100 text-blue-800';
       case 'Alpha': return 'bg-red-100 text-red-800';
+      case 'Izin': return 'bg-purple-100 text-purple-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -71,7 +73,7 @@ export default function StudentStatusList() {
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          {['Semua', 'Hadir', 'Terlambat', 'Sakit', 'Alpha'].map((status) => (
+          {['Semua', 'Hadir', 'Terlambat', 'Sakit', 'Alpha', 'Izin'].map((status) => (
             <button
               key={status}
               onClick={() => setFilter(status)}
