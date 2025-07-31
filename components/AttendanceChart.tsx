@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { STUDENTS_DATA, ABSENSI_DATA } from '../lib/dummyData';
+import { fetchAbsensi } from '../lib/supabaseData';
 
 interface ChartData {
   name: string;
@@ -14,34 +14,34 @@ export default function AttendanceChart() {
 
   useEffect(() => {
     loadWeeklyData();
+    // eslint-disable-next-line
   }, []);
 
-  const loadWeeklyData = () => {
-    const absensiData = JSON.parse(localStorage.getItem('absensiData') || JSON.stringify(ABSENSI_DATA));
-    
-    // Generate data untuk 7 hari terakhir
-    const weekData: ChartData[] = [];
-    const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
-    
-    for (let i = 6; i >= 0; i--) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      const dateStr = date.toISOString().split('T')[0];
-      const dayData = absensiData.filter((item: any) => item.tanggal === dateStr);
-      
-      const hadir = dayData.filter((item: any) => item.status === 'hadir').length;
-      const terlambat = dayData.filter((item: any) => item.status === 'terlambat').length;
-      const sakit = dayData.filter((item: any) => item.status === 'sakit').length;
-      const alpha = dayData.filter((item: any) => item.status === 'alpha').length;
-      
-      weekData.push({
-        name: dayNames[date.getDay()],
-        hadir: hadir + terlambat, // Terlambat dianggap hadir
-        tidak: sakit + alpha
-      });
+  const loadWeeklyData = async () => {
+    try {
+      const absensiData = await fetchAbsensi();
+      // Generate data untuk 7 hari terakhir
+      const weekData: ChartData[] = [];
+      const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+      for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        const dateStr = date.toISOString().split('T')[0];
+        const dayData = absensiData.filter((item: any) => item.tanggal === dateStr);
+        const hadir = dayData.filter((item: any) => item.status === 'hadir').length;
+        const terlambat = dayData.filter((item: any) => item.status === 'terlambat').length;
+        const sakit = dayData.filter((item: any) => item.status === 'sakit').length;
+        const alpha = dayData.filter((item: any) => item.status === 'alpha').length;
+        weekData.push({
+          name: dayNames[date.getDay()],
+          hadir: hadir + terlambat, // Terlambat dianggap hadir
+          tidak: sakit + alpha
+        });
+      }
+      setChartData(weekData);
+    } catch (err) {
+      setChartData([]);
     }
-    
-    setChartData(weekData);
   };
 
   return (

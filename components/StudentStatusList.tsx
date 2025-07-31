@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { STUDENTS_DATA, ABSENSI_DATA, getInitials, STATUS_COLORS, STATUS_LABELS } from '../lib/dummyData';
+import { getInitials } from '../lib/dummyData';
+import { fetchAbsensi } from '../lib/supabaseData';
 
 interface StudentStatusData {
   id: number;
@@ -19,22 +20,23 @@ export default function StudentStatusList() {
     loadTodayAttendance();
   }, []);
 
-  const loadTodayAttendance = () => {
+  const loadTodayAttendance = async () => {
     const today = new Date().toISOString().split('T')[0];
-    const absensiData = JSON.parse(localStorage.getItem('absensiData') || JSON.stringify(ABSENSI_DATA));
-    const todayAbsensi = absensiData.filter((item: any) => item.tanggal === today);
-
-    // Buat data status siswa berdasarkan data absensi hari ini
-    const statusData: StudentStatusData[] = todayAbsensi.map((item: any) => ({
-      id: item.siswaId,
-      name: item.nama,
-      class: item.kelas,
-      status: getStatusDisplayName(item.status),
-      time: item.waktu || '-',
-      avatar: getInitials(item.nama)
-    }));
-
-    setStudentStatusData(statusData);
+    try {
+      const absensiData = await fetchAbsensi();
+      const todayAbsensi = absensiData.filter((item: any) => item.tanggal === today);
+      const statusData: StudentStatusData[] = todayAbsensi.map((item: any) => ({
+        id: item.siswaId,
+        name: item.nama,
+        class: item.kelas,
+        status: getStatusDisplayName(item.status),
+        time: item.waktu || '-',
+        avatar: getInitials(item.nama)
+      }));
+      setStudentStatusData(statusData);
+    } catch (err) {
+      setStudentStatusData([]);
+    }
   };
 
   const getStatusDisplayName = (status: string): 'Hadir' | 'Terlambat' | 'Sakit' | 'Alpha' => {

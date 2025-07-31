@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Header from '../../components/Header';
 import StudentForm from './StudentForm';
-import { STUDENTS_DATA, getInitials } from '../../lib/dummyData';
+import { getInitials } from '../../lib/dummyData';
+import { fetchStudents, addStudent, updateStudent, deleteStudent } from '../../lib/supabaseData';
 
 interface Student {
   id: number;
@@ -30,22 +31,12 @@ export default function SiswaPage() {
   const [filterStatus, setFilterStatus] = useState('semua');
 
   useEffect(() => {
-    loadStudents();
+    fetchStudents().then(setStudents);
   }, []);
 
   useEffect(() => {
     filterStudents();
   }, [students, searchTerm, filterKelas, filterStatus]);
-
-  const loadStudents = () => {
-    const savedStudents = localStorage.getItem('studentData');
-    if (savedStudents) {
-      setStudents(JSON.parse(savedStudents));
-    } else {
-      setStudents(STUDENTS_DATA);
-      localStorage.setItem('studentData', JSON.stringify(STUDENTS_DATA));
-    }
-  };
 
   const filterStudents = () => {
     let filtered = students;
@@ -79,33 +70,32 @@ export default function SiswaPage() {
     setShowForm(true);
   };
 
-  const handleDeleteStudent = (id: number) => {
+  const handleDeleteStudent = async (id: number) => {
     if (confirm('Apakah Anda yakin ingin menghapus data siswa ini?')) {
-      const updatedStudents = students.filter(student => student.id !== id);
-      setStudents(updatedStudents);
-      localStorage.setItem('studentData', JSON.stringify(updatedStudents));
+      try {
+        await deleteStudent(id);
+        const updated = await fetchStudents();
+        setStudents(updated);
+      } catch (err) {
+        alert('Gagal menghapus siswa!');
+      }
     }
   };
 
-  const handleFormSuccess = (studentData: Omit<Student, 'id'>) => {
-    if (editingStudent) {
-      const updatedStudents = students.map(student =>
-        student.id === editingStudent.id
-          ? { ...studentData, id: editingStudent.id }
-          : student
-      );
-      setStudents(updatedStudents);
-      localStorage.setItem('studentData', JSON.stringify(updatedStudents));
-    } else {
-      const newStudent = {
-        ...studentData,
-        id: Math.max(0, ...students.map(s => s.id)) + 1
-      };
-      const updatedStudents = [...students, newStudent];
-      setStudents(updatedStudents);
-      localStorage.setItem('studentData', JSON.stringify(updatedStudents));
+  const handleFormSuccess = async (studentData: Omit<Student, 'id'>) => {
+    try {
+      if (editingStudent) {
+        await updateStudent({ ...studentData, id: editingStudent.id });
+      } else {
+        // id di Supabase auto increment, jadi tidak perlu set manual
+        await addStudent(studentData as Student);
+      }
+      const updated = await fetchStudents();
+      setStudents(updated);
+      setShowForm(false);
+    } catch (err) {
+      alert('Gagal menyimpan data siswa!');
     }
-    setShowForm(false);
   };
 
   const getUniqueKelas = () => {
@@ -179,7 +169,7 @@ export default function SiswaPage() {
               <div className="bg-green-50 p-3 lg:p-4 rounded-lg">
                 <div className="flex items-center space-x-2 lg:space-x-3">
                   <div className="w-8 h-8 lg:w-10 lg:h-10 bg-green-500 rounded-lg flex items-center justify-center">
-                    <i className="ri-user-check-line text-white text-sm lg:text-base"></i>
+                    <i className="ri-user-line text-white text-sm lg:text-base"></i>
                   </div>
                   <div>
                     <p className="text-xs lg:text-sm text-green-600">Siswa Aktif</p>

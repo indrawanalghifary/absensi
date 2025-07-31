@@ -2,7 +2,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Header from '../../components/Header';
-import { STUDENTS_DATA, ABSENSI_DATA } from '../../lib/dummyData';
+import { useCallback } from 'react';
+import { fetchAbsensi, fetchStudents } from '../../lib/supabaseData';
 
 interface AbsensiData {
   id: number;
@@ -21,23 +22,28 @@ export default function RekapPage() {
   const [absensiData, setAbsensiData] = useState<AbsensiData[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const existingData = localStorage.getItem('absensiData');
-    if (!existingData) {
-      localStorage.setItem('absensiData', JSON.stringify(ABSENSI_DATA));
+  const [students, setStudents] = useState<any[]>([]);
+
+  const loadMonthlyData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const [absensi, siswa] = await Promise.all([
+        fetchAbsensi(),
+        fetchStudents()
+      ]);
+      setStudents(siswa);
+      const monthlyData = absensi.filter((item: AbsensiData) => item.tanggal.startsWith(selectedMonth));
+      setAbsensiData(monthlyData);
+    } catch (err) {
+      setAbsensiData([]);
+      setStudents([]);
     }
-    loadMonthlyData();
+    setLoading(false);
   }, [selectedMonth]);
 
-  const loadMonthlyData = () => {
-    setLoading(true);
-    const data = JSON.parse(localStorage.getItem('absensiData') || JSON.stringify(ABSENSI_DATA));
-    const monthlyData = data.filter((item: AbsensiData) => 
-      item.tanggal.startsWith(selectedMonth)
-    );
-    setAbsensiData(monthlyData);
-    setLoading(false);
-  };
+  useEffect(() => {
+    loadMonthlyData();
+  }, [selectedMonth, loadMonthlyData]);
 
   const getMonthlyStats = () => {
     const totalDays = new Date(parseInt(selectedMonth.split('-')[0]), parseInt(selectedMonth.split('-')[1]), 0).getDate();
@@ -61,8 +67,7 @@ export default function RekapPage() {
 
   const getStudentSummary = () => {
     const studentMap = new Map();
-
-    STUDENTS_DATA.forEach(student => {
+    students.forEach(student => {
       studentMap.set(student.id, {
         nama: student.nama,
         kelas: student.kelas,
@@ -74,7 +79,6 @@ export default function RekapPage() {
         total: 0
       });
     });
-
     absensiData.forEach(item => {
       if (studentMap.has(item.siswaId)) {
         const student = studentMap.get(item.siswaId);
@@ -82,7 +86,6 @@ export default function RekapPage() {
         student.total++;
       }
     });
-
     return Array.from(studentMap.values())
       .filter(student => student.total > 0)
       .sort((a, b) => b.total - a.total);
@@ -202,7 +205,7 @@ export default function RekapPage() {
             <div className="bg-white p-3 lg:p-6 rounded-xl shadow-sm border">
               <div className="flex flex-col lg:flex-row lg:items-center space-y-2 lg:space-y-0 lg:space-x-3">
                 <div className="w-8 h-8 lg:w-12 lg:h-12 bg-green-500 rounded-lg flex items-center justify-center">
-                  <i className="ri-user-check-line text-white text-sm lg:text-xl"></i>
+                  <i className="ri-user-line text-white text-sm lg:text-xl"></i>
                 </div>
                 <div>
                   <p className="text-xs lg:text-sm text-gray-600">Hadir</p>

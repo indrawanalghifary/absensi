@@ -5,44 +5,40 @@ import StatCard from '../components/StatCard';
 import AttendanceChart from '../components/AttendanceChart';
 import StudentStatusList from '../components/StudentStatusList';
 import RecentActivity from '../components/RecentActivity';
-import { initializeLocalStorageData, STUDENTS_DATA } from '../lib/dummyData';
+import { fetchStudents, fetchAbsensi } from '../lib/supabaseData';
 
 export default function Home() {
   const [stats, setStats] = useState({
     totalSiswa: 0,
     hadirHariIni: 0,
     terlambat: 0,
-    tidakHadir: 0
+    tidakHadir: 0,
+    todayAbsensi: 0
   });
 
   useEffect(() => {
-    // Inisialisasi data dummy saat pertama kali load
-    initializeLocalStorageData();
-    
-    // Load statistik real-time dari data terpusat
     loadDashboardStats();
   }, []);
 
-  const loadDashboardStats = () => {
-    // Total siswa dari data master
-    const totalSiswa = STUDENTS_DATA.length;
-    
-    // Data absensi hari ini
+  const loadDashboardStats = async () => {
+    const [students, absensi] = await Promise.all([
+      fetchStudents(),
+      fetchAbsensi()
+    ]);
+    const totalSiswa = students.length;
     const today = new Date().toISOString().split('T')[0];
-    const absensiData = JSON.parse(localStorage.getItem('absensiData') || '[]');
-    const todayAbsensi = absensiData.filter((item: any) => item.tanggal === today);
-    
+    const todayAbsensi = absensi.filter((item: any) => item.tanggal === today);
     const hadirHariIni = todayAbsensi.filter((item: any) => item.status === 'hadir').length;
     const terlambat = todayAbsensi.filter((item: any) => item.status === 'terlambat').length;
     const sakit = todayAbsensi.filter((item: any) => item.status === 'sakit').length;
     const alpha = todayAbsensi.filter((item: any) => item.status === 'alpha').length;
     const tidakHadir = sakit + alpha;
-    
     setStats({
       totalSiswa,
       hadirHariIni,
       terlambat,
-      tidakHadir
+      tidakHadir,
+      todayAbsensi: todayAbsensi.length,
     });
   };
 
@@ -62,28 +58,29 @@ export default function Home() {
             value={stats.totalSiswa.toString()} 
             icon="ri-user-line" 
             color="bg-blue-500"
-            change="+2% dari bulan lalu"
+            // change="+2% dari bulan lalu"
+            change={`${stats.totalSiswa > 0 ? ((stats.todayAbsensi / stats.totalSiswa) * 100).toFixed(1) : '0.0'}% Total Siswa`}
           />
           <StatCard 
             title="Hadir Hari Ini" 
             value={stats.hadirHariIni.toString()} 
-            icon="ri-user-check-line" 
+            icon="ri-user-line" 
             color="bg-green-500"
-            change={`${((stats.hadirHariIni / stats.totalSiswa) * 100).toFixed(1)}% kehadiran`}
+            change={`${stats.totalSiswa > 0 ? ((stats.hadirHariIni / stats.totalSiswa) * 100).toFixed(1) : '0.0'}% kehadiran`}
           />
           <StatCard 
             title="Terlambat" 
             value={stats.terlambat.toString()} 
             icon="ri-time-line" 
             color="bg-yellow-500"
-            change={`${((stats.terlambat / stats.totalSiswa) * 100).toFixed(1)}% dari total`}
+            change={`${stats.totalSiswa > 0 ? ((stats.terlambat / stats.totalSiswa) * 100).toFixed(1) : '0.0'}% dari total`}
           />
           <StatCard 
             title="Tidak Hadir" 
             value={stats.tidakHadir.toString()} 
             icon="ri-user-unfollow-line" 
             color="bg-red-500"
-            change={`${((stats.tidakHadir / stats.totalSiswa) * 100).toFixed(1)}% dari total`}
+            change={`${stats.totalSiswa > 0 ? ((stats.tidakHadir / stats.totalSiswa) * 100).toFixed(1) : '0.0'}% dari total`}
           />
         </div>
 

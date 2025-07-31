@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { getInitials, STUDENTS_DATA, ABSENSI_DATA } from '../lib/dummyData';
+import { getInitials } from '../lib/dummyData';
+import { fetchAbsensi } from '../lib/supabaseData';
 
 interface ActivityData {
   id: number;
@@ -19,25 +20,26 @@ export default function RecentActivity() {
     loadRecentActivities();
   }, []);
 
-  const loadRecentActivities = () => {
-    const absensiData = JSON.parse(localStorage.getItem('absensiData') || JSON.stringify(ABSENSI_DATA));
-    
-    // Ambil 5 absensi terbaru berdasarkan timestamp
-    const recentAbsensi = absensiData
-      .sort((a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-      .slice(0, 5);
-
-    const activityData: ActivityData[] = recentAbsensi.map((item: any, index: number) => ({
-      id: item.id || index,
-      type: 'attendance',
-      message: `${item.nama} dicatat ${getStatusLabel(item.status)} pada ${new Date(item.tanggal).toLocaleDateString('id-ID')}`,
-      user: 'Admin',
-      time: formatTimeAgo(item.timestamp),
-      icon: getStatusIcon(item.status),
-      color: getStatusActivityColor(item.status)
-    }));
-
-    setActivities(activityData);
+  const loadRecentActivities = async () => {
+    try {
+      const absensiData = await fetchAbsensi();
+      // Ambil 5 absensi terbaru berdasarkan timestamp
+      const recentAbsensi = absensiData
+        .sort((a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+        .slice(0, 5);
+      const activityData: ActivityData[] = recentAbsensi.map((item: any, index: number) => ({
+        id: item.id || index,
+        type: 'attendance',
+        message: `${item.nama} dicatat ${getStatusLabel(item.status)} pada ${new Date(item.tanggal).toLocaleDateString('id-ID')}`,
+        user: 'Admin',
+        time: formatTimeAgo(item.timestamp),
+        icon: getStatusIcon(item.status),
+        color: getStatusActivityColor(item.status)
+      }));
+      setActivities(activityData);
+    } catch (err) {
+      setActivities([]);
+    }
   };
 
   const getStatusLabel = (status: string): string => {

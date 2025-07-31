@@ -1,7 +1,8 @@
 
 'use client';
 import { useState } from 'react';
-import { STUDENTS_DATA } from '../../lib/dummyData';
+import { useEffect } from 'react';
+import { fetchStudents, addAbsensi } from '../../lib/supabaseData';
 
 interface AbsensiFormProps {
   selectedDate: string;
@@ -17,36 +18,41 @@ export default function AbsensiForm({ selectedDate, onClose, onSuccess }: Absens
     keterangan: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [students, setStudents] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchStudents().then(setStudents);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Simulasi proses submit
-    setTimeout(() => {
-      const siswa = STUDENTS_DATA.find(s => s.id === parseInt(formData.siswaId));
-      if (siswa) {
-        // Simpan ke localStorage untuk simulasi database
-        const existingData = JSON.parse(localStorage.getItem('absensiData') || '[]');
-        const newAbsensi = {
-          id: Date.now(),
-          tanggal: selectedDate,
-          siswaId: siswa.id,
-          nama: siswa.nama,
-          kelas: siswa.kelas,
-          nis: siswa.nis,
-          status: formData.status,
-          waktu: formData.waktu,
-          keterangan: formData.keterangan,
-          timestamp: new Date().toISOString()
-        };
-        existingData.push(newAbsensi);
-        localStorage.setItem('absensiData', JSON.stringify(existingData));
+    const siswa = students.find(s => s.id === parseInt(formData.siswaId));
+    if (siswa) {
+      const newAbsensi = {
+        id: Date.now(),
+        tanggal: selectedDate,
+        siswaId: siswa.id,
+        nama: siswa.nama,
+        kelas: siswa.kelas,
+        nis: siswa.nis,
+        status: formData.status,
+        waktu: formData.waktu,
+        keterangan: formData.keterangan,
+        timestamp: new Date().toISOString()
+      };
+      try {
+        await addAbsensi(newAbsensi);
+        setIsSubmitting(false);
+        onSuccess();
+      } catch (err) {
+        setIsSubmitting(false);
+        alert('Gagal menyimpan absensi!');
       }
-
+    } else {
       setIsSubmitting(false);
-      onSuccess();
-    }, 1000);
+      alert('Siswa tidak ditemukan!');
+    }
   };
 
   return (
@@ -80,7 +86,7 @@ export default function AbsensiForm({ selectedDate, onClose, onSuccess }: Absens
                 required
               >
                 <option value="">-- Pilih Siswa --</option>
-                {STUDENTS_DATA.map(siswa => (
+                {students.map(siswa => (
                   <option key={siswa.id} value={siswa.id}>
                     {siswa.nama} - {siswa.kelas}
                   </option>

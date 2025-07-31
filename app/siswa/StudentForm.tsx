@@ -69,7 +69,7 @@ export default function StudentForm({ student, onClose, onSuccess }: StudentForm
 
     if (!formData.email.trim()) {
       newErrors.email = 'Email wajib diisi';
-    } else if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(formData.email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Format email tidak valid';
     }
 

@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { fetchAbsensi, deleteAbsensi } from '../../lib/supabaseData';
 
 interface AbsensiTableProps {
   selectedDate: string;
@@ -26,10 +27,11 @@ export default function AbsensiTable({ selectedDate, refresh }: AbsensiTableProp
 
   useEffect(() => {
     loadAbsensiData();
+    // eslint-disable-next-line
   }, [selectedDate, refresh]);
 
-  const loadAbsensiData = () => {
-    const data = JSON.parse(localStorage.getItem('absensiData') || '[]');
+  const loadAbsensiData = async () => {
+    const data = await fetchAbsensi();
     const filteredByDate = data.filter((item: AbsensiData) => item.tanggal === selectedDate);
     setAbsensiData(filteredByDate);
   };
@@ -54,11 +56,9 @@ export default function AbsensiTable({ selectedDate, refresh }: AbsensiTableProp
     }
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     if (confirm('Apakah Anda yakin ingin menghapus data absensi ini?')) {
-      const data = JSON.parse(localStorage.getItem('absensiData') || '[]');
-      const updatedData = data.filter((item: AbsensiData) => item.id !== id);
-      localStorage.setItem('absensiData', JSON.stringify(updatedData));
+      await deleteAbsensi(id);
       loadAbsensiData();
     }
   };
@@ -107,7 +107,7 @@ export default function AbsensiTable({ selectedDate, refresh }: AbsensiTableProp
           <div className="bg-green-50 p-3 rounded-lg">
             <div className="flex flex-col lg:flex-row lg:items-center space-y-2 lg:space-y-0 lg:space-x-2">
               <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                <i className="ri-user-check-line text-white text-sm"></i>
+                <i className="ri-user-line text-white text-sm"></i>
               </div>
               <div>
                 <p className="text-xs lg:text-sm text-green-600">Hadir</p>
