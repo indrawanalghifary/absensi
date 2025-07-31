@@ -1,0 +1,7 @@
+{
+  "/page": "app/page.js",
+  "/absensi/page": "app/absensi/page.js",
+  "/rekap/page": "app/rekap/page.js",
+  "/siswa/page": "app/siswa/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
+}
