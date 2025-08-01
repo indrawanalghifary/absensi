@@ -2,6 +2,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Header from '../../components/Header';
+import ProtectedRoute from '../../components/ProtectedRoute';
 import { useCallback } from 'react';
 import { fetchAbsensi, fetchStudents } from '../../lib/supabaseData';
 
@@ -144,8 +145,9 @@ export default function RekapPage() {
   const dailyStats = getDailyStats();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gray-50">
+        <Header />
 
       <main className="p-4 lg:p-6">
         <div className="mb-6 lg:mb-8">
@@ -384,5 +386,6 @@ export default function RekapPage() {
         </div>
       </main>
     </div>
+    </ProtectedRoute>
   );
 }

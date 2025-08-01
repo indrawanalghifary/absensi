@@ -5,6 +5,7 @@ import StatCard from '../components/StatCard';
 import AttendanceChart from '../components/AttendanceChart';
 import StudentStatusList from '../components/StudentStatusList';
 import RecentActivity from '../components/RecentActivity';
+import ProtectedRoute from '../components/ProtectedRoute';
 import { fetchStudents, fetchAbsensi } from '../lib/supabaseData';
 
 export default function Home() {
@@ -46,8 +47,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gray-50">
+        <Header />
       
       <main className="p-4 lg:p-6">
         <div className="mb-6 lg:mb-8">
@@ -102,5 +104,6 @@ export default function Home() {
         <RecentActivity />
       </main>
     </div>
+    </ProtectedRoute>
   );
 }

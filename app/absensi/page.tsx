@@ -2,6 +2,7 @@
 'use client';
 import { useState } from 'react';
 import Header from '../../components/Header';
+import ProtectedRoute from '../../components/ProtectedRoute';
 import AbsensiForm from './AbsensiForm';
 import AbsensiTable from './AbsensiTable';
 import DateSelector from './DateSelector';
@@ -17,8 +18,9 @@ export default function AbsensiPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gray-50">
+        <Header />
       
       <main className="p-4 lg:p-6">
         <div className="mb-6 lg:mb-8">
@@ -60,5 +62,6 @@ export default function AbsensiPage() {
         )}
       </main>
     </div>
+    </ProtectedRoute>
   );
 }

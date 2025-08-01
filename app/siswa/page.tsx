@@ -2,6 +2,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Header from '../../components/Header';
+import ProtectedRoute from '../../components/ProtectedRoute';
 import StudentForm from './StudentForm';
 import { getInitials } from '../../lib/dummyData';
 import { fetchStudents, addStudent, updateStudent, deleteStudent } from '../../lib/supabaseData';
@@ -122,8 +123,9 @@ export default function SiswaPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gray-50">
+        <Header />
 
       <main className="p-4 lg:p-6">
         <div className="mb-6 lg:mb-8">
@@ -461,5 +463,6 @@ export default function SiswaPage() {
         )}
       </main>
     </div>
+    </ProtectedRoute>
   );
 }

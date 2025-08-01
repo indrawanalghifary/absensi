@@ -1,6 +1,8 @@
 {
   "/page": "app/page.js",
   "/absensi/page": "app/absensi/page.js",
-  "/rekap/page": "app/rekap/page.js",
-  "/siswa/page": "app/siswa/page.js"
+  "/siswa/page": "app/siswa/page.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/auth/register/page": "app/auth/register/page.js",
+  "/rekap/page": "app/rekap/page.js"
 }
