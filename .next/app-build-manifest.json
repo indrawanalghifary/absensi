@@ -1,65 +1,124 @@
 {
   "pages": {
-    "/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/layout.css",
-      "static/chunks/app/layout.js"
-    ],
     "/not-found": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
-    ],
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
-    ],
-    "/absensi/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/absensi/page.js"
-    ],
-    "/rekap/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/rekap/page.js"
-    ],
-    "/siswa/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/siswa/page.js"
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/app/not-found-f7ee353790d76f07.js"
     ],
     "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/app/_not-found/page-413aed8d83e7f436.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/css/b9e3c58863f871d6.css",
+      "static/chunks/232-dbb740f8f6693d69.js",
+      "static/chunks/19-703003cb96214211.js",
+      "static/chunks/app/layout-c93e8e239d778bf9.js"
+    ],
+    "/absensi/page": [
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/232-dbb740f8f6693d69.js",
+      "static/chunks/28-5ecd41a0f7256f80.js",
+      "static/chunks/417-336a61e8f7bb60c4.js",
+      "static/chunks/app/absensi/page-ef340c308693d532.js"
     ],
     "/auth/login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/auth/login/page.js"
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/232-dbb740f8f6693d69.js",
+      "static/chunks/28-5ecd41a0f7256f80.js",
+      "static/chunks/app/auth/login/page-70f5f19501c7ed46.js"
     ],
     "/auth/register/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/auth/register/page.js"
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/232-dbb740f8f6693d69.js",
+      "static/chunks/28-5ecd41a0f7256f80.js",
+      "static/chunks/app/auth/register/page-5bbb7932c941f399.js"
     ],
-    "/kamera/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/kamera/page.js"
+    "/auth/reset-password/page": [
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/232-dbb740f8f6693d69.js",
+      "static/chunks/28-5ecd41a0f7256f80.js",
+      "static/chunks/app/auth/reset-password/page-2f31fbdc07cae04e.js"
     ],
     "/dashboardsiswa/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/dashboardsiswa/page.js"
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/232-dbb740f8f6693d69.js",
+      "static/chunks/28-5ecd41a0f7256f80.js",
+      "static/chunks/71-e07eb6795470993c.js",
+      "static/chunks/app/dashboardsiswa/page-92f8a551bf641bf7.js"
+    ],
+    "/kamera/page": [
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/232-dbb740f8f6693d69.js",
+      "static/chunks/28-5ecd41a0f7256f80.js",
+      "static/chunks/71-e07eb6795470993c.js",
+      "static/chunks/app/kamera/page-ea221495bd7d513e.js"
     ],
     "/loginsiswa/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/loginsiswa/page.js"
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/232-dbb740f8f6693d69.js",
+      "static/chunks/app/loginsiswa/page-b0d8cdafeb5ea8e0.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/232-dbb740f8f6693d69.js",
+      "static/chunks/28-5ecd41a0f7256f80.js",
+      "static/chunks/462-057745921931cff0.js",
+      "static/chunks/417-336a61e8f7bb60c4.js",
+      "static/chunks/app/page-4d4671052d7e4c3b.js"
+    ],
+    "/rekap/page": [
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/232-dbb740f8f6693d69.js",
+      "static/chunks/28-5ecd41a0f7256f80.js",
+      "static/chunks/417-336a61e8f7bb60c4.js",
+      "static/chunks/app/rekap/page-07cba8b9d8656567.js"
+    ],
+    "/siswa/page": [
+      "static/chunks/webpack-ddae60f9179f15d4.js",
+      "static/chunks/4bd1b696-57239d6f36033277.js",
+      "static/chunks/517-15e034df46e1af6b.js",
+      "static/chunks/main-app-58b874a2e62a2c1d.js",
+      "static/chunks/232-dbb740f8f6693d69.js",
+      "static/chunks/28-5ecd41a0f7256f80.js",
+      "static/chunks/417-336a61e8f7bb60c4.js",
+      "static/chunks/app/siswa/page-bffd9ea186125525.js"
     ]
   }
 }
