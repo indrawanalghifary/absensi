@@ -117,7 +117,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Login ke Sistem Absensi
+            Login Admin
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             Atau{' '}
@@ -128,6 +128,14 @@ export default function LoginPage() {
               daftar akun baru
             </Link>
           </p>
+          <div className="mt-4 text-center">
+            <Link
+              href="/loginsiswa"
+              className="text-sm text-gray-500 hover:text-indigo-600 transition-colors"
+            >
+              Login sebagai Siswa →
+            </Link>
+          </div>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           <div className="rounded-md shadow-sm -space-y-px">

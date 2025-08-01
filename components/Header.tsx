@@ -27,13 +27,13 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-8">
             <Link href="/" className="text-xl lg:text-2xl font-pacifico text-blue-600">
-              AbsensiKu
+              AbsensiKu Admin
             </Link>
             
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex space-x-6">
               <Link href="/" className="text-gray-700 hover:text-blue-600 font-medium">
-                Dashboard
+                Dashboard Admin
               </Link>
               <Link href="/absensi" className="text-gray-700 hover:text-blue-600 font-medium">
                 Absensi Harian
@@ -69,6 +69,7 @@ export default function Header() {
                     <div className="px-4 py-2 text-sm text-gray-700 border-b">
                       <div className="font-medium">{getUserDisplayName()}</div>
                       <div className="text-gray-500">{user?.email}</div>
+                      <div className="text-xs text-blue-600 font-medium">Status: Admin</div>
                     </div>
                     <button
                       onClick={handleSignOut}
@@ -101,7 +102,7 @@ export default function Header() {
                 className="text-gray-700 hover:text-blue-600 font-medium py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Dashboard
+                Dashboard Admin
               </Link>
               <Link 
                 href="/absensi" 
@@ -132,6 +133,7 @@ export default function Header() {
                   <div>
                     <div className="text-gray-700 font-medium">{getUserDisplayName()}</div>
                     <div className="text-xs text-gray-500">{user?.email}</div>
+                    <div className="text-xs text-blue-600 font-medium">Status: Admin</div>
                   </div>
                 </div>
                 <button

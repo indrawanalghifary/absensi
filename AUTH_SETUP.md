@@ -1,6 +1,6 @@
-# Setup Autentikasi untuk Sistem Absensi
+# Setup Autentikasi dan Fitur Absensi Kamera untuk Sistem Absensi
 
-Sistem login telah berhasil ditambahkan ke website absensi Anda! Berikut adalah penjelasan fitur dan cara menggunakannya:
+Sistem login dan fitur absensi dengan kamera telah berhasil ditambahkan ke website absensi Anda! Berikut adalah penjelasan fitur dan cara menggunakannya:
 
 ## Fitur Autentikasi yang Ditambahkan
 
@@ -23,15 +23,31 @@ Sistem login telah berhasil ditambahkan ke website absensi Anda! Berikut adalah 
 
 ### 4. **Proteksi Rute**
 Semua halaman utama sekarang dilindungi dengan autentikasi:
-- `/` (Dashboard)
-- `/absensi` (Absensi Harian)
-- `/rekap` (Rekap Bulanan)
-- `/siswa` (Data Siswa)
+- `/` (Dashboard Admin)
+- `/absensi` (Absensi Harian Admin)
+- `/rekap` (Rekap Bulanan Admin)
+- `/siswa` (Data Siswa Admin)
+- `/kamera` (Absensi Kamera Siswa)
+- `/dashboardsiswa` (Dashboard Personal Siswa)
 
 ### 5. **Header dengan User Info**
 - Menampilkan nama pengguna yang sedang login
 - Dropdown menu dengan informasi profil
 - Tombol logout
+
+### 6. **Halaman Absensi dengan Kamera** (`/kamera`)
+- Absensi menggunakan foto selfie dan GPS
+- Deteksi lokasi otomatis
+- Upload foto ke Supabase Storage
+- Validasi waktu untuk menentukan status (hadir/terlambat)
+- Pencegahan duplikasi absensi per hari
+
+### 7. **Dashboard Siswa** (`/dashboardsiswa`)
+- Dashboard khusus untuk siswa yang sudah login
+- Statistik absensi personal
+- Riwayat absensi dengan filter bulan
+- Status absensi hari ini
+- Quick action untuk absen dengan kamera
 
 ## Setup dan Konfigurasi
 
@@ -43,7 +59,7 @@ NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 ```
 
-### 2. Konfigurasi Supabase Auth
+### 2. Konfigurasi Supabase
 Di dashboard Supabase Anda:
 
 1. **Authentication > Settings > Auth**:
@@ -56,6 +72,14 @@ Di dashboard Supabase Anda:
      - `http://localhost:3000/auth/reset-password`
      - `http://localhost:3000`
 
+3. **Database Setup**:
+   - Jalankan SQL script di `database/attendance_records.sql`
+   - Script ini akan membuat tabel, storage bucket, dan policies yang diperlukan
+
+4. **Storage Configuration**:
+   - Bucket `attendance-photos` akan dibuat otomatis
+   - Public access sudah dikonfigurasi untuk foto absensi
+
 ### 3. Email Templates (Opsional)
 Anda bisa customize email templates di Supabase:
 - **Authentication > Email Templates**
@@ -63,16 +87,26 @@ Anda bisa customize email templates di Supabase:
 
 ## Cara Menggunakan
 
-### Untuk Administrator Pertama:
-1. Akses `/auth/register` untuk membuat akun admin pertama
-2. Cek email untuk verifikasi (jika diaktifkan)
-3. Login melalui `/auth/login`
+### Untuk Administrator:
+1. **Setup Database**: Jalankan SQL script di `database/attendance_records.sql`
+2. **Akses Admin**: Gunakan `/auth/register` untuk membuat akun admin pertama
+3. **Login Admin**: Akses `/auth/login` dan gunakan halaman admin (/, /absensi, /rekap, /siswa)
 
-### Flow Pengguna Normal:
-1. **Registrasi**: Pengguna baru mendaftar di `/auth/register`
-2. **Login**: Akses `/auth/login` dengan credentials
-3. **Akses Aplikasi**: Setelah login, bisa mengakses semua fitur
-4. **Logout**: Klik tombol logout di header
+### Untuk Siswa:
+1. **Registrasi**: Daftar akun baru di `/auth/register`
+2. **Login**: Masuk melalui `/auth/login`
+3. **Dashboard Siswa**: Akses `/dashboardsiswa` untuk melihat statistik personal
+4. **Absensi Kamera**: Klik "Absen Sekarang" atau akses `/kamera` langsung
+
+### Flow Absensi dengan Kamera:
+1. Buka halaman `/kamera`
+2. Izinkan akses kamera dan lokasi
+3. Tunggu hingga lokasi terdeteksi
+4. Klik "Aktifkan Kamera"
+5. Ambil foto selfie dengan klik "Ambil Foto"
+6. Review foto, klik "Foto Ulang" jika perlu
+7. Klik "Kirim Absensi" untuk menyimpan
+8. Sistem otomatis menentukan status berdasarkan waktu
 
 ### Reset Password:
 1. Di halaman login, klik "Lupa password?"

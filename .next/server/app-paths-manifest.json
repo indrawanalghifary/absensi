@@ -1,8 +1,7 @@
 {
-  "/page": "app/page.js",
-  "/absensi/page": "app/absensi/page.js",
-  "/siswa/page": "app/siswa/page.js",
+  "/kamera/page": "app/kamera/page.js",
+  "/dashboardsiswa/page": "app/dashboardsiswa/page.js",
   "/auth/login/page": "app/auth/login/page.js",
-  "/auth/register/page": "app/auth/register/page.js",
-  "/rekap/page": "app/rekap/page.js"
+  "/loginsiswa/page": "app/loginsiswa/page.js",
+  "/auth/register/page": "app/auth/register/page.js"
 }
